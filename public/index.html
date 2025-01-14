@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHOTONHUB</title>
+<style>
+   * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+       font-family: sans-serif;
+   }
+   .main .Judul {
+      position: relative;
+      height: 55px;
+      background: var(--black);
+      width: 100%;
+   }
+   .Judul h1 {
+      position: relative;
+      top: 10px;
+      display: flex;
+      justify-content: center;
+      color: var(--white);
+   }
+   .Judul h1 span {
+    position: relative;
+       background: #ff6f00;
+       padding: 1.5px;
+       border-radius: 5px;
+      color: var(--black);
+   }
+   :root {
+       --blue: #287bff;
+       --white: #fff;
+       --black: #222;
+       --grey: #f5f5f5f5;
+       --black2: #999;
+   }
+   body {
+       min-height: 100vh;
+       overflow-x: hidden;
+   }
+   .container {
+       position: relative;
+       width: 100%;
+   }
+   .navigation {
+       position: fixed;
+       width: 80px;
+       height: 100%;
+       background: var(--black);
+       border-left: 10px solid var(--black);
+       transition: 0.5s;
+       overflow: hidden;
+   }
+   .navigation.active {
+       width: 300px;
+   }
+   .navigation ul {
+       position: absolute;
+       top: 0;
+       left: 0;
+       width: 100%;
+   }
+   .navigation ul li {
+       position: relative;
+       width: 100%;
+       list-style: none;
+       border-top-left-radius: 30px;
+       border-bottom-left-radius: 30px;
+   }
+   .navigation ul li:hover,
+   .navigation ul li.hovered {
+       background: var(--black);
+   }
+
+   .navigation ul li a {
+       position: relative;
+       display: block;
+       width: 100%;
+       display: flex;
+       text-decoration: none;
+       color: var(--white);
+   }
+   .navigation ul li:hover a,
+   .navigation ul li.hovered a {
+       color: var(--white);
+   }
+   .navigation ul li a .icon {
+       position: relative;
+       display: block;
+       min-width: 60px;
+       height: 60px;
+       line-height: 70px;
+       text-align: center;
+   }
+   .navigation ul li a .icon ion-icon {
+       font-size: 1.75em;
+   }
+   .navigation ul li a .title {
+       position: relative;
+       display: block;
+       padding: 0 18px;
+       height: 60px;
+       line-height: 60px;
+       text-align: start;
+       white-space: nowrap;
+   }
+   .main {
+       position: absolute;
+       width: calc(100% - 80px);
+       left: 80px;
+       min-height: 100vh;
+       background: var(--black);
+       transition: 0.5s;
+   }
+   .main.active {
+       width: calc(100% - 180px);
+       left: 180px;
+   }
+   .topbar {
+       width: 100%;
+       height: 20px;
+       display: flex;
+       justify-content: space-between;
+       align-items: center;
+       padding: 0 10px;
+   }
+   .toggle {
+       position: relative;
+       color: var(--white);
+       display: flex;
+       cursor: pointer;
+   }
+   .toggle .icon {
+       position: relative;
+       display: block;
+       min-width: 60px;
+       height: 60px;
+       line-height: 70px;
+       text-align: center;
+       font-size: 2.5em;
+   }
+    .toggle .title {
+       position: relative;
+       display: block;
+       padding: 0 18px;
+       height: 60px;
+       line-height: 60px;
+       text-align: start;
+       white-space: nowrap;
+   }
+   .Tengah{
+        display: flex;
+        justify-content: center;
+}
+   .cardBox {
+       padding: 20px;
+       position: relative;
+       align-items: center;
+       width: 580px;
+   }
+    .grid{
+       position: relative;
+       width: 100%;
+       align-items: center;
+       padding: 20px;
+       display: grid;
+       grid-template-columns: repeat(3,3fr);
+       grid-gap: 30px;
+    }
+    .grid .card {
+       position: relative;
+       background: var(--black2);
+       padding-inline: 20px;
+       padding-block: 10px;
+       border-radius: 30px;
+       box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+   }
+   .grid .card .numbers {
+    color: var(--black);
+       font-size: 50px;
+        font-weight: bold;
+       position: relative;  
+   }
+   .grid .card .numbers span{
+    font-size: 20px;
+    position: relative;
+    margin-top: -10px;
+   }
+   .grid .card .cardName {
+       color: var(--black2);
+       font-size: 1.1em;
+       margin-top: 5px;
+   }
+   .cardBox .card {
+       background: var(--black2);
+       border-radius: 30px;
+       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+       margin-bottom: 20px;
+   }
+   .cardBox .card .Konten{
+            display: flex;
+            justify-content: space-between;
+            margin-left: 10px;
+            margin-top: 1px;
+            padding: 5px;
+   }
+   .Lokasi {
+            font-weight: bold;
+            font-size: 19px;
+            align-items: center;
+        }
+       .cardBox .card .Konten .Waktu {
+            position: absolute;
+            margin-top: 0px;
+        }
+   .cardBox .card .Konten .numbers span {
+       color: var(--black);
+       font-size: 30px;
+        font-weight: bold;
+   }
+   .cardBox .card .Konten .numbers{
+       color: var(--black);
+       font-size: 20px;
+    font-weight: bold;
+   }
+   .header{
+    padding: 17px;
+    background-color: #ff6f00;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    margin-bottom: -23px;
+   }
+   .Kata-kata{
+        position: relative;
+        font-size: 15px;
+        font-weight: bold;
+        margin-top: 0;
+        bottom: 12px;
+        left: 7px;
+        color: var(--white);
+   }
+   .logo{
+    position: relative;
+    font-size: 19px;
+    top: 3px;
+    color: var(--black);
+    margin-left: 15px;
+    align-items: center;
+   }
+   .Konten{
+    display: flex;
+            justify-content: space-between;
+            padding: 10px;
+   }
+   .wadah{
+    display: flex;
+    justify-content: center;
+   }
+   .ISPU {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            background: conic-gradient(var(--color) calc(var(--percent) * 1%), #f0f0f0 calc(var(--percent) * 1%));
+            border-radius: 50%;
+            margin-right: 20px;
+            margin-bottom: 20px;
+        }
+        .ISPU::before {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background: var(--black2);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+.ISPU .ISPU-value {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            font-size: 17px;
+            font-weight: bold;
+        }
+    .kotak{
+       position: relative;
+       width: 66%;
+       align-items: center;
+       padding: 20px;
+       display: grid;
+       grid-template-columns: repeat(2,1fr);
+       grid-gap: 30px;
+       margin-top: -10px;
+    }
+    .kotak .card {
+       position: relative;
+       background: var(--black2);
+       padding-inline: 20px;
+       padding-block: 10px;
+       border-radius: 30px;
+       box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+   }
+   .kotak .card .numbers {
+    color: var(--black);
+       font-size: 50px;
+        font-weight: bold;
+       position: relative;  
+   }
+   .kotak .card .numbers span{
+    font-size: 20px;
+    position: relative;
+    margin-top: -10px;
+   }
+   .kotak .card .cardName {
+       color: var(--black2);
+       font-size: 1.1em;
+       margin-top: 5px;
+   }
+   .BAB{
+    position: relative;
+    margin-left: 25px;
+    font-size: 25px;
+    color: #fff;
+    padding: 5px;
+   }
+   @media screen and (max-width: 768px) {
+    /* Judul adjustments */
+    .main .Judul {
+        height: 28px;
+    }
+    .Judul h1 {
+        font-size: 20px;
+        top: 4px;
+    }
+    
+    /* Navigation adjustments */
+    .navigation {
+        width: 40px;
+        border-left: 5px solid var(--black);
+    }
+    .navigation.active {
+        width: 150px;
+    }
+    .navigation ul li a .icon {
+        min-width: 30px;
+        height: 30px;
+        line-height: 35px;
+    }
+    .navigation ul li a .icon ion-icon {
+        font-size: 1.2em;
+    }
+    .navigation ul li a .title {
+        padding: 0 9px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 14px;
+    }
+    
+    /* Main content adjustments */
+    .main {
+        width: calc(480 - 40px);
+        left: 40px;
+    }
+    .main.active {
+        width: calc(480 - 107px);
+        left: 107px;
+    }
+    
+    /* Toggle button */
+    .toggle .icon {
+        min-width: 30px;
+        height: 20px;
+        line-height: 35px;
+        font-size: 1.5em;
+    }
+    .toggle .title {
+       padding: 0 10px;
+       line-height: 30px;
+       height: 20px;
+       font-size: 0.95em;
+   }
+    /* Card container */
+    .cardBox {
+        padding: 10px;
+        width: 290px;
+    }
+    .cardBox .card {
+       border-radius: 15px;
+       margin-bottom: 8px;
+   }
+    
+    /* Header section */
+    .header {
+        padding: 8px;
+        margin-bottom: -12px;
+        border-top-left-radius: 13px;
+        border-top-right-radius: 13px;
+    }
+    .Kata-kata {
+        font-size: 8px;
+        bottom: 6px;
+        left: 4px;
+    }
+    
+    /* Location and status */
+    .logo {
+        font-size: 10px;
+        top: 2px;
+        margin-left: 8px;
+    }
+    .Lokasi {
+        font-size: 8px;
+    }
+    
+    /* ISPU circles */
+    .ISPU {
+        width: 55px;
+        height: 55px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    .ISPU::before {
+        width: 40px;
+        height: 40px;
+    }
+    .ISPU .ISPU-value {
+        font-size: 9px;
+    }
+    .ISPU .ISPU-value span {
+        font-size: 9px;
+    }
+    
+    /* Status text */
+    .numbers {
+        font-size: 17.8px !important;
+    }
+    .numbers span {
+        font-size: 8px !important;
+    }
+    #status {
+        font-size: 8px;
+    }
+    .Waktu {
+        font-size: 8px;
+        margin-top: 0;
+    }
+    
+    /* Grid layout - changed to 1 column */
+    .grid {
+        padding: 5px;
+        grid-gap: 15px;
+        grid-template-columns:repeat(2,5fr);
+    }
+    .grid .card {
+        padding: 0px;
+        border-radius: 15px;
+    }
+    
+    /* Bottom section */
+    .BAB {
+        margin-left: 12px;
+        font-size: 12px;
+        padding: 3px;
+    }
+    
+    /* Bottom grid - changed to 1 column */
+    .kotak {
+        padding: 5px;
+        grid-gap: 15px;
+        width: 100%;
+        margin-top: 5px;
+        grid-template-columns:repeat(2,1fr);
+    }
+    .kotak .card {
+        border-radius: 15px;
+        padding-inline: 0px;
+        padding-block: 0px;
+    }
+    .cardBox .card .Konten .Waktu {
+            margin-top: -10px;
+        }
+   .cardBox .card .Konten .numbers{
+       margin-top: 0px;
+   }
+    
+    /* Content spacing */
+    .Konten {
+        padding: px;
+        margin-left: 5px;
+        margin-top: 0;
+    }
+}
+@media screen and (max-width: 480px) {
+    /* Judul adjustments */
+    .main .Judul {
+        height: 28px;
+    }
+    .Judul h1 {
+        font-size: 20px;
+        top: 4px;
+    }
+    
+    /* Navigation adjustments */
+    .navigation {
+        width: 40px;
+        border-left: 5px solid var(--black);
+    }
+    .navigation.active {
+        width: 150px;
+    }
+    .navigation ul li a .icon {
+        min-width: 30px;
+        height: 30px;
+        line-height: 35px;
+    }
+    .navigation ul li a .icon ion-icon {
+        font-size: 1.2em;
+    }
+    .navigation ul li a .title {
+        padding: 0 9px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 14px;
+    }
+    
+    /* Main content adjustments */
+    .main {
+        width: calc(100% - 40px);
+        left: 40px;
+    }
+    .main.active {
+        width: calc(100% - 107px);
+        left: 107px;
+    }
+    
+    /* Toggle button */
+    .toggle .icon {
+        min-width: 30px;
+        height: 20px;
+        line-height: 35px;
+        font-size: 1.5em;
+    }
+    .toggle .title {
+       padding: 0 10px;
+       line-height: 30px;
+       height: 20px;
+       font-size: 0.95em;
+   }
+    /* Card container */
+    .cardBox {
+        padding: 10px;
+        width: 290px;
+    }
+    .cardBox .card {
+       border-radius: 15px;
+       margin-bottom: 8px;
+   }
+    
+    /* Header section */
+    .header {
+        padding: 8px;
+        margin-bottom: -12px;
+        border-top-left-radius: 13px;
+        border-top-right-radius: 13px;
+    }
+    .Kata-kata {
+        font-size: 8px;
+        bottom: 6px;
+        left: 4px;
+    }
+    
+    /* Location and status */
+    .logo {
+        font-size: 10px;
+        top: 2px;
+        margin-left: 8px;
+    }
+    .Lokasi {
+        font-size: 8px;
+    }
+    
+    /* ISPU circles */
+    .ISPU {
+        width: 55px;
+        height: 55px;
+        margin-right: 10px;
+        margin-bottom: 10px;
+    }
+    .ISPU::before {
+        width: 40px;
+        height: 40px;
+    }
+    .ISPU .ISPU-value {
+        font-size: 9px;
+    }
+    .ISPU .ISPU-value span {
+        font-size: 9px;
+    }
+    
+    /* Status text */
+    .numbers {
+        font-size: 17.8px !important;
+    }
+    .numbers span {
+        font-size: 8px !important;
+    }
+    #status {
+        font-size: 8px;
+    }
+    .Waktu {
+        font-size: 8px;
+        margin-top: 0;
+    }
+    
+    /* Grid layout - changed to 1 column */
+    .grid {
+        padding: 5px;
+        grid-gap: 15px;
+        grid-template-columns:repeat(2,5fr);
+    }
+    .grid .card {
+        padding: 0px;
+        border-radius: 15px;
+    }
+    
+    /* Bottom section */
+    .BAB {
+        margin-left: 12px;
+        font-size: 12px;
+        padding: 3px;
+    }
+    
+    /* Bottom grid - changed to 1 column */
+    .kotak {
+        padding: 5px;
+        grid-gap: 15px;
+        width: 100%;
+        margin-top: 5px;
+        grid-template-columns:repeat(2,1fr);
+    }
+    .kotak .card {
+        border-radius: 15px;
+        padding-inline: 0px;
+        padding-block: 0px;
+    }
+    .cardBox .card .Konten .Waktu {
+            margin-top: -10px;
+        }
+   .cardBox .card .Konten .numbers{
+       margin-top: 0px;
+   }
+    
+    /* Content spacing */
+    .Konten {
+        padding: px;
+        margin-left: 5px;
+        margin-top: 0;
+    }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div class="navigation">
+<ul>
+<li>
+<a href="#">
+<span class="icon"></span>
+<span class="title"></span>
+</a>
+</li>
+<li>
+<a href="https://t.me/PhotonHub_bot">
+<span class="icon"><ion-icon name="paper-plane"></ion-icon></span>
+<span class="title">Telegram</span>
+</a>
+</li>
+</ul>
+<div class="toggle">
+<span class="icon"><ion-icon name="menu-outline"></ion-icon></span>
+<span class="title">Menu</span>
+</div>
+</div>
+<div class="main">
+<div class="Judul">
+<h1>Photon<span>hub</span></h1>
+</div>
+<div class="topbar">
+</div>
+<div class="Tengah">
+<div class="cardBox">
+    <div class="header">
+        <div class="Kata-kata">Kondisi Udara memburuk</div>
+        </div>
+<div class="card">
+<span class="logo"><ion-icon name="location"></ion-icon></span>
+<span class="Lokasi">Laweyan, Surakarta</span>
+<div class="Konten">
+<diV>
+<div class="numbers"><span id="airQualityStatus">Unhealthy</span><br><p id="status">For sensitive People</p></br></div>
+<div class="Waktu">7.50 WIB</div>
+</div>
+<div id ="ispuElement" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="ispu">124 </span><br>ISPU</br></div>
+</div>
+<div id ="coElement" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="co">45</span><br>PPM</br></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="BAB">
+    <span>Another Data</span>
+</div>
+<div class="grid">
+<div class="card">
+<div>
+    <div class="Konten">
+<div class="numbers">CO<span>2</span><br><span id="status">Karbon Dioksida</span></br></div>
+<div id ="co2Element" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="co2">32</span><br>PPM</br></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div>
+    <div class="Konten">
+<div class="numbers">H<span>2</span><br><span id="status">Hidrogen</span></br></div>
+<div id ="h2Element" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="h2">124</span><br>PPM</br></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div>
+    <div class="Konten">
+<div class="numbers">CH<span>4</span><br><span id="status">Metana</span></br></div>
+<div id ="ch4Element" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="ch4">44</span><br>PPM</br></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div>
+    <div class="Konten">
+<div class="numbers">C<span>2</span>H<span>5</span>OH<br><span>Alcohol</span></br></div>
+<div id ="alcoholElement" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="alcohol">55</span><br>PPM</br></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div>
+    <div class="Konten">
+<div class="numbers">C<span>6</span>H<span>5</span>CH<span>3</span><br><span id="status">Toluen</span></br></div>
+<div id ="toluenElement" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="toluen">124</span><br>PPM</br></div>
+</div>
+</div>
+</div>
+</div>
+<div class="card">
+<div>
+    <div class="Konten">
+<div class="numbers">NH<span>4</span><br><span id="status">Amonium</span></br></div>
+<div id ="nh4Element" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="nh4">124</span><br>PPM</br></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="wadah">
+<div class="kotak">
+<div class="card">
+    <div>
+        <div class="Konten">
+    <div class="numbers">C<span>3</span>H<span>6</span>O<br><span id="status">Aceton</span></br></div>
+    <div id ="acetonElement" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+        <div class="ISPU-value"><span id ="aceton">124</span><br>PPM</br></div>
+    </div>
+    </div>
+    </div>
+    </div>
+<div class="card">
+<div>
+    <div class="Konten">
+<div class="numbers">C<span>3.5</span>H<span>9</span><br><span id="status">LPG</span></br></div>
+<div id ="lpgElement" class="ISPU" style="--color: #ff6f00; --percent: 1;">
+    <div class="ISPU-value"><span id ="lpg">124</span><br>PPM</br></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+function updatePercentage(elementId, value, maxValue) {
+    const percent = (value / maxValue) * 100;
+    console.log(`Updating ${elementId} to ${percent}%`);
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.style.setProperty('--percent', percent);
+    } else {
+        console.warn(`Element with ID "${elementId}" not found.`);
+    }
+}
+let toggle = document.querySelector('.toggle');
+let navigation = document.querySelector('.navigation');
+let main = document.querySelector('.main');
+toggle.onclick = function() {
+    navigation.classList.toggle('active');
+    main.classList.toggle('active');
+};
+let list = document.querySelectorAll('.navigation li');
+function activeLink() {
+    list.forEach((item) => item.classList.remove('hovered'));
+    this.classList.add('hovered');
+}
+list.forEach((item) => item.addEventListener('mouseover', activeLink));
+var connection = new WebSocket('ws://' + location.hostname + ':81/');
+connection.onmessage = function(event) {
+var data = JSON.parse(event.data);
+document.getElementById('co').textContent = data.co;
+document.getElementById('h2').textContent = data.h2;
+document.getElementById('lpg').textContent = data.lpg;
+document.getElementById('ch4').textContent = data.ch4;
+document.getElementById('alcohol').textContent = data.alcohol;
+document.getElementById('co2').textContent = data.co2;
+document.getElementById('toluen').textContent = data.toluen;
+document.getElementById('nh4').textContent = data.nh4;
+document.getElementById('aceton').textContent = data.aceton;
+document.getElementById('ispu').textContent = data.ispu;
+document.getElementById('airQualityStatus').textContent = data.airQualityStatus; 
+updatePercentage('coElement', data.co, 1000);
+updatePercentage('h2Element', data.h2, 100);
+updatePercentage('lpgElement', data.lpg, 100);
+updatePercentage('ch4Element', data.ch4, 100);
+updatePercentage('alcoholElement', data.alcohol, 1);
+updatePercentage('co2Element', data.co2, 1000);
+updatePercentage('toluenElement', data.toluen, 1);
+updatePercentage('nh4Element', data.nh4, 1);
+updatePercentage('acetonElement', data.aceton, 1);
+updatePercentage('ispuElement', data.ispu, 100);
+};
+</script>
+</body>
+</html>
